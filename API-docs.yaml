@@ -6,6 +6,7 @@ tags:
   - name: Login
   - name: Songs
   - name: Saved
+
 paths:
   /login:
     post:
@@ -42,12 +43,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WrongCredentials'
+
   /songs:
     get:
       tags:
         - Songs
       summary: Get songs
       description: Get songs based on the provided parameters. When no search parameters are provided, all songs will be returned. As this is a large list, this API is really slow.
+      security:
+        - authTokenCookie: []
+        - authTokenQuery: []
       parameters:
         - name: name
           in: query
@@ -91,20 +96,6 @@ paths:
           schema:
             type: string
             example: 10
-        - name: authToken
-          in: query
-          description: authorization token needed to call API
-          required: false
-          schema:
-            type: string
-            example: 2aac6c37-4af6-411b-91ee-88e23c02ce66
-        - name: authToken
-          in: cookie
-          description: authorization token needed to call API
-          required: false
-          schema:
-            type: string
-            example: 2aac6c37-4af6-411b-91ee-88e23c02ce66
       responses:
         '200':
           description: Successful operation
@@ -118,12 +109,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnAuthorized'
+
   /saved:
     get:
       tags:
         - Saved
       summary: Get saved songs
       description: Get saved songs based on the provided parameters. When no search parameters parameters are provided, all saved songs will be returned.
+      security:
+        - authTokenCookie: []
+        - authTokenQuery: []
       parameters:
         - name: name
           in: query
@@ -167,20 +162,6 @@ paths:
           schema:
             type: string
             example: 10
-        - name: authToken
-          in: query
-          description: authorization token needed to call API
-          required: false
-          schema:
-            type: string
-            example: 2aac6c37-4af6-411b-91ee-88e23c02ce66
-        - name: authToken
-          in: cookie
-          description: authorization token needed to call API
-          required: false
-          schema:
-            type: string
-            example: 2aac6c37-4af6-411b-91ee-88e23c02ce66
       responses:
         '200':
           description: Successful operation
@@ -194,11 +175,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnAuthorized'
+
     post:
       tags:
         - Saved
       summary: Add song to saved
       description: Add songs to your saved playlist by providing the song object in the body.
+      security:
+        - authTokenCookie: []
+        - authTokenQuery: []
       requestBody:
         description: Add song to saved playlist
         content:
@@ -219,11 +204,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnAuthorized'
+
     delete:
       tags:
         - Saved
       summary: Delete song from saved
       description: Delete a song from your saved playlist by providing the song's id in a parameter.
+      security:
+        - authTokenCookie: []
+        - authTokenQuery: []
       parameters:
         - name: songId
           in: query
@@ -253,6 +242,17 @@ paths:
                 $ref: '#/components/schemas/UnAuthorized'
 
 components:
+  securitySchemes:
+    authTokenCookie:
+      type: apiKey
+      in: cookie
+      name: authToken
+
+    authTokenQuery:
+      type: apiKey
+      in: query
+      name: authToken
+
   schemas:
     Login:
       type: object
@@ -263,42 +263,49 @@ components:
         password:
           type: string
           example: test
+
     WrongCredentials:
       type: object
       properties:
         error:
           type: string
           example: Email or password incorrect
+
     MissingCredentials:
       type: object
       properties:
         error:
           type: string
           example: Credentials are missing
+
     UnAuthorized:
       type: object
       properties:
         error:
           type: string
           example: You are not authenticated
+
     AddedSong:
       type: object
       properties:
         message:
           type: string
           example: ADD song
+
     RemovedSong:
       type: object
       properties:
         message:
           type: string
           example: REMOVE song
+
     BadRequestSaved:
       type: object
       properties:
         error:
           type: string
           example: no songId provided
+
     Song:
       type: object
       properties:
@@ -335,6 +342,7 @@ components:
         albumImage:
           type: string
           example: https://i.scdn.co/image/ab67616d0000b273c2ced39899b0d67cd5a724fa
+
     Songs:
       type: array
       items:

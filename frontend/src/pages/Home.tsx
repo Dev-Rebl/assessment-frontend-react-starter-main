@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
-export default function Home() {
+export const Home = () => {
   const [songs, setSongs] = useState([]);
   const [saved, setSaved] = useState([]);
 
@@ -65,7 +65,7 @@ export default function Home() {
             onChange={(e) => findSongs(e.target.value)}
             placeholder="Find songs..." />
 
-          {songs.map((el) => (
+          {songs?.map((el) => (
             <div
               className="p-2 rounded-lg border-2 border-gray-500">
               <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -73,8 +73,8 @@ export default function Home() {
                   <div className="flex items-center space-x-4">
                     <div className="flex-shrink-0">
                       <img className="w-12 h-12 rounded-md"
-                           src={el.albumImage}
-                           referrerPolicy={'no-referrer'}
+                        src={el.albumImage}
+                        referrerPolicy={'no-referrer'}
                       />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -112,7 +112,7 @@ export default function Home() {
                   <div className="flex items-center space-x-4">
                     <div className="flex-shrink-0">
                       <img className="w-12 h-12 rounded-md"
-                           src={el.albumImage} />
+                        src={el.albumImage} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-medium text-gray-900 truncate dark:text-white">
