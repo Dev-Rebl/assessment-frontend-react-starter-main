@@ -5,39 +5,32 @@ import { ListAction, Song } from './listTypes'
 
 interface ListProps {
   songs: components['schemas']['Songs']
-  action: ListAction
-  onAction: (song: Song) => void
-  disabledSongIds?: ReadonlySet<number>
-  status: 'pending' | 'error' | 'success'
-  emptyMessage: string
-  errorMessage: string
-  loadingMessage: string
-  onRetry: () => void
-  isUpdating?: boolean
+  action: {
+    type: ListAction
+    onAction: (song: Song) => void
+    disabledSongIds?: ReadonlySet<number>
+  }
+  feedback: {
+    status: 'pending' | 'error' | 'success'
+    emptyMessage: string
+    errorMessage: string
+    loadingMessage: string
+    onRetry: () => void
+    isUpdating?: boolean
+  }
 }
 
-export const List = ({
-  songs,
-  action,
-  onAction,
-  disabledSongIds = new Set(),
-  status,
-  emptyMessage,
-  errorMessage,
-  loadingMessage,
-  onRetry,
-  isUpdating = false,
-}: ListProps) => {
-  if (status === 'pending') {
-    return <ListState variant="loading" message={loadingMessage} />
+export const List = ({ songs, action, feedback }: ListProps) => {
+  if (feedback.status === 'pending') {
+    return <ListState variant="loading" message={feedback.loadingMessage} />
   }
 
-  if (status === 'error') {
-    return <ListState variant="error" message={errorMessage} onRetry={onRetry} />
+  if (feedback.status === 'error') {
+    return <ListState variant="error" message={feedback.errorMessage} onRetry={feedback.onRetry} />
   }
 
   if (songs.length === 0) {
-    return <ListState variant="empty" message={emptyMessage} />
+    return <ListState variant="empty" message={feedback.emptyMessage} />
   }
 
   return (
@@ -45,11 +38,11 @@ export const List = ({
       <ul role="list">
         {songs.map((song) => (
           <ListItem
-            action={action}
-            isAdded={disabledSongIds.has(song.id)}
-            isLoading={isUpdating}
+            action={action.type}
+            isAdded={action.disabledSongIds?.has(song.id) ?? false}
+            isLoading={feedback.isUpdating ?? false}
             key={song.id}
-            onAction={onAction}
+            onAction={action.onAction}
             song={song}
           />
         ))}
