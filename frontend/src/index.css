@@ -3,7 +3,52 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply font-sans;
+    font-synthesis: none;
+  }
+
   body {
-    @apply bg-canvas text-content;
+    @apply bg-canvas text-base font-normal leading-6 text-content antialiased;
+  }
+
+  h1 {
+    @apply font-bold;
+    font-size: 2rem;
+    line-height: 2.5rem;
+    letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 650;
+    line-height: 2rem;
+    letter-spacing: -0.02em;
+  }
+
+  h3 {
+    @apply text-xl font-semibold leading-7;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    @apply text-base font-normal leading-6;
+  }
+
+  label {
+    @apply text-sm font-semibold leading-5;
+  }
+
+  small {
+    @apply text-xs font-normal leading-4;
+  }
+}
+
+@layer utilities {
+  .text-display {
+    @apply font-bold;
+    font-size: 2.5rem;
+    line-height: 3rem;
+    letter-spacing: -0.04em;
   }
 }
