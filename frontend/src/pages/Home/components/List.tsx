@@ -1,4 +1,5 @@
 import { components } from '../../../api/api-types'
+import { useState } from 'react'
 import { ListItem } from './ListItem'
 import { ListState } from './ListState'
 import { ListAction, Song } from './listTypes'
@@ -21,6 +22,12 @@ interface ListProps {
 }
 
 export const List = ({ songs, action, feedback }: ListProps) => {
+  const [expandedSongId, setExpandedSongId] = useState<number | null>(null)
+
+  const toggleSong = (song: Song) => {
+    setExpandedSongId((currentSongId) => (currentSongId === song.id ? null : song.id))
+  }
+
   if (feedback.status === 'pending') {
     return <ListState variant="loading" message={feedback.loadingMessage} />
   }
@@ -41,8 +48,10 @@ export const List = ({ songs, action, feedback }: ListProps) => {
             action={action.type}
             isAdded={action.disabledSongIds?.has(song.id) ?? false}
             isLoading={feedback.isUpdating ?? false}
+            isExpanded={expandedSongId === song.id}
             key={song.id}
             onAction={action.onAction}
+            onToggle={toggleSong}
             song={song}
           />
         ))}

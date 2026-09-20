@@ -40,7 +40,10 @@ export const ListItemAction = ({
       aria-label={actionLabel}
       title={actionLabel}
       disabled={isLoading}
-      onClick={() => onAction(song)}
+      onClick={(event) => {
+        event.stopPropagation()
+        onAction(song)
+      }}
       className={cn({
         'border-feedback-danger text-feedback-danger hover:bg-feedback-danger/10': isRemoveAction,
       })}

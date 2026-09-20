@@ -2,12 +2,6 @@ interface IconProps {
   className?: string
 }
 
-export const GripIcon = ({ className }: IconProps) => (
-  <svg className={className} fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
-    <path d="M104,60A12,12,0,1,1,92,48,12,12,0,0,1,104,60Zm60,12a12,12,0,1,0-12-12A12,12,0,0,0,164,72ZM92,116a12,12,0,1,0,12,12A12,12,0,0,0,92,116Zm72,0a12,12,0,1,0,12,12A12,12,0,0,0,164,116ZM92,184a12,12,0,1,0,12,12A12,12,0,0,0,92,184Zm72,0a12,12,0,1,0,12,12A12,12,0,0,0,164,184Z"></path>
-  </svg>
-)
-
 export const PlusIcon = ({ className }: IconProps) => (
   <svg className={className} fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
     <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z" />
@@ -29,6 +23,18 @@ export const TrashIcon = ({ className }: IconProps) => (
 export const MusicNoteIcon = ({ className }: IconProps) => (
   <svg className={className} fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
     <path d="M212.92,17.69a8,8,0,0,0-6.86-1.45l-128,32A8,8,0,0,0,72,56V166.08A36,36,0,1,0,88,196V110.25l112-28v51.83A36,36,0,1,0,216,164V24A8,8,0,0,0,212.92,17.69ZM52,216a20,20,0,1,1,20-20A20,20,0,0,1,52,216ZM88,93.75V62.25l112-28v31.5ZM180,184a20,20,0,1,1,20-20A20,20,0,0,1,180,184Z"></path>
+  </svg>
+)
+
+export const ChevronDownIcon = ({ className }: IconProps) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+    <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+  </svg>
+)
+
+export const SpotifyIcon = ({ className }: IconProps) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+    <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm31.07-46.26a8,8,0,0,1-10.81,3.33,42.79,42.79,0,0,0-40.52,0,8,8,0,0,1-7.48-14.14,59.33,59.33,0,0,1,55.48,0A8,8,0,0,1,159.07,169.74Zm32-56a8,8,0,0,1-10.83,3.29,110.62,110.62,0,0,0-104.46,0,8,8,0,0,1-7.54-14.12,126.67,126.67,0,0,1,119.54,0A8,8,0,0,1,191.06,113.76Zm-16,28a8,8,0,0,1-10.82,3.3,77,77,0,0,0-72.48,0,8,8,0,0,1-7.52-14.12,93,93,0,0,1,87.52,0A8,8,0,0,1,175.06,141.76Z" />
   </svg>
 )
 

@@ -7,7 +7,6 @@ export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon' | 'icon-sm'
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant
   size?: ButtonSize
-  fullWidth?: boolean
   isLoading?: boolean
 }
 
