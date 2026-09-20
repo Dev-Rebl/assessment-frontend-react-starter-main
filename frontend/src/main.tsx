@@ -3,13 +3,11 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom";
 import "./index.css";
 import {
-  QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
 import { Login, Home, } from "./pages";
 import { getAuthToken } from "./utils";
-
-const queryClient = new QueryClient()
+import { queryClient } from "./queryclient";
 
 const checkAuth = async () => {
   const token = await getAuthToken()

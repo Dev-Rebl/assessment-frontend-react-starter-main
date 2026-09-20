@@ -308,6 +308,13 @@ components:
 
     Song:
       type: object
+      required:
+        - id
+        - name
+        - artist
+        - shortname
+        - duration
+
       properties:
         id:
           type: integer

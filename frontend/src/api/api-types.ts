@@ -304,19 +304,19 @@ export interface components {
         };
         Song: {
             /** @example 123 */
-            id?: number;
+            id: number;
             /** @example 21st Century Breakdown */
-            name?: string;
+            name: string;
             /** @example Green Day */
-            artist?: string;
+            artist: string;
             /** @example 1978 */
             year?: number;
             /** @example 21stcentdigiboy */
-            shortname?: string;
+            shortname: string;
             /** @example 150 */
             bpm?: number;
             /** @example 372025 */
-            duration?: number;
+            duration: number;
             /** @example rock */
             genre?: string;
             /** @example 5H8xFHau0x3PI1CssO6EaX */

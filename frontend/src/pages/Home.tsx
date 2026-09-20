@@ -1,56 +1,59 @@
-import { useEffect, useState } from "react";
+import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
+import { useDebouncedState } from "../hooks/useDebouncedState";
+import { useState } from "react";
+import { cn } from "cn"
+import { getMainSongsQueryOptions, getSavedSongsQueryOptions } from "../api/queries";
+import { addSongMutationOptions, deleteSongMutationOptions } from "../api/mutations";
+import { components } from "../api/api-types";
+
 
 export const Home = () => {
-  const [songs, setSongs] = useState([]);
-  const [saved, setSaved] = useState([]);
 
-  const getAuthToken = () => {
-    let atc = document.cookie.split(";").find((cookie) => cookie.startsWith("authToken"));
-    return atc?.split('=')[1] || null
+  const [search, setSearch] = useState('')
+  const [savedSearch, setSavedSearch] = useState('')
+  const [pageNumber, setPageNumber] = useState(1)
+  const debouncedSearch = useDebouncedState(search, 100)
+  const debouncedSavedSearch = useDebouncedState(savedSearch, 100)
+
+  const amountPerPage = 100;
+
+
+  const paginationParams = {
+    amountPerPage: `${amountPerPage}`,
+    pageNumber: `${pageNumber}`
   }
 
-  const getSongs = async () => {
-    const response = await fetch("http://localhost:4000/saved?authToken=" + getAuthToken());
-    const saved = await response.json();
-    const res = await fetch("http://localhost:4000/songs?authToken=" + getAuthToken());
-    const songs = await res.json();
-    setSaved(saved);
-    setSongs(songs);
-  };
+  const songsQuery = useQuery({
+    ...getMainSongsQueryOptions(debouncedSearch ? {
+      name: debouncedSearch,
+      ...paginationParams
+    } : paginationParams),
+    placeholderData: keepPreviousData
+  })
 
-  const saveSong = async (song) => {
-    await fetch("http://localhost:4000/saved?authToken=" + getAuthToken(), {
-      body: JSON.stringify(song),
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+  const isLoadingSongs = songsQuery.isLoading || songsQuery.isPlaceholderData && songsQuery.isFetching
+  const savedQuery = useQuery({
+    ...getSavedSongsQueryOptions(debouncedSavedSearch ? {
+      name: debouncedSavedSearch,
+    } : undefined),
+    placeholderData: keepPreviousData
+  })
+  const isLoadingSavedSongs = savedQuery.isLoading || savedQuery.isPlaceholderData && savedQuery.isFetching
+
+  const savedSongIds = new Set(savedQuery.data?.map(s => s.id))
+
+  // Useful since the API does not return a total page count.
+  const couldHaveNextPage = songsQuery.data?.length === amountPerPage;
+
+  const addSongMutation = useMutation(addSongMutationOptions)
+  const deleteSongMutation = useMutation(deleteSongMutationOptions)
+
+  const addSong = (song: components['schemas']['Song']) => {
+    addSongMutation.mutate(song)
   }
-
-  const deleteSong = async (song) => {
-    await fetch("http://localhost:4000/saved?authToken=" + getAuthToken(), {
-      body: JSON.stringify(song),
-      method: 'DELETE',
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+  const deleteSong = (songId: number) => {
+    deleteSongMutation.mutate(songId)
   }
-
-  const findSongs = async (query) => {
-    const response = await fetch("http://localhost:4000/songs?name=" + query + "&authToken=" + getAuthToken());
-    setSongs(await response.json())
-  }
-
-  const findSongsSaved = async (query) => {
-    const response = await fetch("http://localhost:4000/saved?name=" + query + "&authToken=" + getAuthToken());
-    setSaved(await response.json())
-  }
-
-  useEffect(() => {
-    getSongs();
-  }, []);
 
   return (
     <div className="grid md:grid-cols-2 gap-4 p-4 justify-center container mx-auto h-screen my-auto">
@@ -62,14 +65,19 @@ export const Home = () => {
             type="search"
             className="w-full rounded border-2 border-orange-500 bg-transparent p-2 text-base text-white placeholder-white"
             id="exampleSearch"
-            onChange={(e) => findSongs(e.target.value)}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Find songs..." />
 
-          {songs?.map((el) => (
+
+          {songsQuery.data?.map((el, index) => (
             <div
+              key={`${el.name}-${el.id}-${index}`}
               className="p-2 rounded-lg border-2 border-gray-500">
               <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
-                <li className="p-2">
+                <li className={cn("p-2", {
+                  'opacity-30': isLoadingSongs
+                })} >
                   <div className="flex items-center space-x-4">
                     <div className="flex-shrink-0">
                       <img className="w-12 h-12 rounded-md"
@@ -85,12 +93,32 @@ export const Home = () => {
                         {el.artist}
                       </div>
                     </div>
-                    <button onClick={() => saveSong(el)} className="hover:cursor-pointer rounded font-bold text-black bg-white  p-2 px-3">Add</button>
+                    <button disabled={savedSongIds.has(el.id)} onClick={() => addSong(el)} className={cn("hover:cursor-pointer rounded font-bold text-black bg-white  p-2 px-3", {
+                      'opacity-30': savedSongIds.has(el.id)
+                    })}>Add</button>
                   </div>
                 </li>
               </ul>
             </div>
           ))}
+
+          <div>
+            <button
+              disabled={pageNumber === 1 || songsQuery.isFetching}
+              onClick={() => setPageNumber((page) => Math.max(1, page - 1))}
+            >
+              Previous
+            </button>
+
+            <span>Page {pageNumber}</span>
+
+            <button
+              disabled={!couldHaveNextPage || songsQuery.isFetching}
+              onClick={() => setPageNumber((page) => page + 1)}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
 
@@ -102,13 +130,17 @@ export const Home = () => {
             type="search"
             className="w-full rounded border-2 border-orange-500 bg-transparent p-2 text-base text-white placeholder-white"
             id="exampleSearch"
-            onChange={(e) => findSongsSaved(e.target.value)}
+            value={savedSearch}
+            onChange={(e) => setSavedSearch(e.currentTarget.value)}
             placeholder="Find saved songs..." />
-          {saved.map((el) => (
+          {savedQuery.data?.map((el, index) => (
             <div
-              className="p-2 rounded-lg border-2 border-gray-500">
+              key={`${el.name}-${el.id}-${index}`}
+              className={"p-2 rounded-lg border-2 border-gray-500"}>
               <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
-                <li className="p-2">
+                <li className={cn("p-2", {
+                  'opacity-30': isLoadingSavedSongs
+                })} >
                   <div className="flex items-center space-x-4">
                     <div className="flex-shrink-0">
                       <img className="w-12 h-12 rounded-md"
@@ -122,7 +154,7 @@ export const Home = () => {
                         {el.artist}
                       </div>
                     </div>
-                    <button onClick={() => deleteSong(el)} className="hover:cursor-pointer font-bold text-white bg-orange-500 rounded py-2 px-3">Delete</button>
+                    <button onClick={() => deleteSong(el.id)} className="hover:cursor-pointer font-bold text-white bg-orange-500 rounded py-2 px-3">Delete</button>
                   </div>
                 </li>
               </ul>

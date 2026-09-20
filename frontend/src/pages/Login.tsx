@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginMutationOptions } from "../queries/queries";
+import { loginMutationOptions } from "../api/mutations";
 
 export const Login = () => {
   const navigate = useNavigate()
