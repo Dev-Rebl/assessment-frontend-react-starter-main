@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FE assessment</title>
+    <script>
+      const savedTheme = localStorage.getItem('theme')
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+
+      document.documentElement.classList.toggle(
+        'dark',
+        savedTheme === 'dark' || (!savedTheme && systemDark),
+      )
+    </script>
   </head>
   <body>
     <div id="root"></div>

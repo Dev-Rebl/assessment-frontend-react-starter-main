@@ -10,5 +10,9 @@
       "directory": "frontend",
       "changeProcessCWD": true
     }
-  ]
+  ],
+  "tailwindCSS.experimental.configFile": "frontend/tailwind.config.ts",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
