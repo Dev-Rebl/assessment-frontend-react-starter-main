@@ -10,6 +10,10 @@ export const getMainSongsQueryOptions = (filters?: Filters) =>
     queryKey: queryKeys.mainList(filters),
     queryFn: async () => {
       const { data } = await api.GET('/songs', filters ? { params: { query: filters } } : undefined)
-      return data
+
+      return {
+        songs: data ?? [],
+        pageNumber: Number(filters?.pageNumber ?? 1),
+      }
     },
   })
