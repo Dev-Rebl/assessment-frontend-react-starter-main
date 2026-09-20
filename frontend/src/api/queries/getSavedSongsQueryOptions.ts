@@ -9,7 +9,15 @@ export const getSavedSongsQueryOptions = (filters?: Filters) =>
   queryOptions({
     queryKey: queryKeys.savedList(filters),
     queryFn: async () => {
-      const { data } = await api.GET('/saved', filters ? { params: { query: filters } } : undefined)
-      return data
+      const { data, error, response } = await api.GET(
+        '/saved',
+        filters ? { params: { query: filters } } : undefined,
+      )
+
+      if (!response.ok) {
+        throw error ?? new Error('Failed to load saved songs')
+      }
+
+      return data ?? []
     },
   })

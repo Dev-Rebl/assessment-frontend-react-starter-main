@@ -1,5 +1,6 @@
 import { components } from '../../../api/api-types'
 import { ListItem } from './ListItem'
+import { ListState } from './ListState'
 import { ListAction, Song } from './listTypes'
 
 interface ListProps {
@@ -7,7 +8,12 @@ interface ListProps {
   action: ListAction
   onAction: (song: Song) => void
   disabledSongIds?: ReadonlySet<number>
-  isLoading?: boolean
+  status: 'pending' | 'error' | 'success'
+  emptyMessage: string
+  errorMessage: string
+  loadingMessage: string
+  onRetry: () => void
+  isUpdating?: boolean
 }
 
 export const List = ({
@@ -15,20 +21,39 @@ export const List = ({
   action,
   onAction,
   disabledSongIds = new Set(),
-  isLoading = false,
-}: ListProps) => (
-  <div className="custom-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-4">
-    <ul role="list">
-      {songs.map((song) => (
-        <ListItem
-          action={action}
-          isAdded={disabledSongIds.has(song.id)}
-          isLoading={isLoading}
-          key={song.id}
-          onAction={onAction}
-          song={song}
-        />
-      ))}
-    </ul>
-  </div>
-)
+  status,
+  emptyMessage,
+  errorMessage,
+  loadingMessage,
+  onRetry,
+  isUpdating = false,
+}: ListProps) => {
+  if (status === 'pending') {
+    return <ListState variant="loading" message={loadingMessage} />
+  }
+
+  if (status === 'error') {
+    return <ListState variant="error" message={errorMessage} onRetry={onRetry} />
+  }
+
+  if (songs.length === 0) {
+    return <ListState variant="empty" message={emptyMessage} />
+  }
+
+  return (
+    <div className="custom-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-4">
+      <ul role="list">
+        {songs.map((song) => (
+          <ListItem
+            action={action}
+            isAdded={disabledSongIds.has(song.id)}
+            isLoading={isUpdating}
+            key={song.id}
+            onAction={onAction}
+            song={song}
+          />
+        ))}
+      </ul>
+    </div>
+  )
+}

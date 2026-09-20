@@ -3,13 +3,8 @@ interface IconProps {
 }
 
 export const GripIcon = ({ className }: IconProps) => (
-  <svg className={className} viewBox="0 0 20 24" fill="currentColor" aria-hidden="true">
-    <circle cx="5" cy="4" r="1.6" />
-    <circle cx="15" cy="4" r="1.6" />
-    <circle cx="5" cy="12" r="1.6" />
-    <circle cx="15" cy="12" r="1.6" />
-    <circle cx="5" cy="20" r="1.6" />
-    <circle cx="15" cy="20" r="1.6" />
+  <svg className={className} fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+    <path d="M104,60A12,12,0,1,1,92,48,12,12,0,0,1,104,60Zm60,12a12,12,0,1,0-12-12A12,12,0,0,0,164,72ZM92,116a12,12,0,1,0,12,12A12,12,0,0,0,92,116Zm72,0a12,12,0,1,0,12,12A12,12,0,0,0,164,116ZM92,184a12,12,0,1,0,12,12A12,12,0,0,0,92,184Zm72,0a12,12,0,1,0,12,12A12,12,0,0,0,164,184Z"></path>
   </svg>
 )
 
@@ -20,15 +15,8 @@ export const PlusIcon = ({ className }: IconProps) => (
 )
 
 export const CheckIcon = ({ className }: IconProps) => (
-  <svg
-    className={className}
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    aria-hidden="true"
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" d="m5 12 4 4L19 6" />
+  <svg className={className} fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+    <path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z" />
   </svg>
 )
 
@@ -40,6 +28,12 @@ export const TrashIcon = ({ className }: IconProps) => (
 
 export const MusicNoteIcon = ({ className }: IconProps) => (
   <svg className={className} fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
-    <path d="M212,32a12,12,0,0,0-10.4-2L90.4,57.8A12,12,0,0,0,81.3,69.5v94.7A44,44,0,1,0,24,206a44,44,0,0,0,81.3-23.2V109.4l87.4-21.8v52.6A44,44,0,1,0,216,179.3V44A12,12,0,0,0,212,32Z" />
+    <path d="M212.92,17.69a8,8,0,0,0-6.86-1.45l-128,32A8,8,0,0,0,72,56V166.08A36,36,0,1,0,88,196V110.25l112-28v51.83A36,36,0,1,0,216,164V24A8,8,0,0,0,212.92,17.69ZM52,216a20,20,0,1,1,20-20A20,20,0,0,1,52,216ZM88,93.75V62.25l112-28v31.5ZM180,184a20,20,0,1,1,20-20A20,20,0,0,1,180,184Z"></path>
+  </svg>
+)
+
+export const ErrorIcon = ({ className }: IconProps) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+    <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"></path>
   </svg>
 )

@@ -45,7 +45,7 @@ export const ListItemAction = ({
         'border-feedback-danger text-feedback-danger hover:bg-feedback-danger/10': isRemoveAction,
       })}
     >
-      {isRemoveAction ? <TrashIcon className="size-4" /> : <PlusIcon className="size-5" />}
+      {isRemoveAction ? <TrashIcon className="size-5" /> : <PlusIcon className="size-5" />}
     </Button>
   )
 }

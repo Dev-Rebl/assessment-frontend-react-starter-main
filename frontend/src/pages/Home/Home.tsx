@@ -42,8 +42,6 @@ export const Home = () => {
     placeholderData: keepPreviousData,
   })
 
-  const isLoadingSongs =
-    songsQuery.isLoading || (songsQuery.isPlaceholderData && songsQuery.isFetching)
   const visiblePageNumber = songsQuery.data?.pageNumber ?? 1
 
   const savedQuery = useQuery({
@@ -56,9 +54,6 @@ export const Home = () => {
     ),
     placeholderData: keepPreviousData,
   })
-  const isLoadingSavedSongs =
-    savedQuery.isLoading || (savedQuery.isPlaceholderData && savedQuery.isFetching)
-
   const savedSongIds = new Set(savedQuery.data?.map((s) => s.id))
 
   // Useful since the API does not return a total page count.
@@ -99,13 +94,22 @@ export const Home = () => {
               action="add"
               onAction={addSong}
               disabledSongIds={savedSongIds}
-              isLoading={isLoadingSongs}
+              status={songsQuery.status}
+              isUpdating={songsQuery.isPlaceholderData}
+              loadingMessage="Loading songs..."
+              emptyMessage={
+                committedSearch
+                  ? `No songs found for “${committedSearch}”. Try another search.`
+                  : 'No songs are available.'
+              }
+              errorMessage="We couldn't load the songs."
+              onRetry={() => void songsQuery.refetch()}
             />
 
             <Pagination
               page={visiblePageNumber}
               hasNextPage={couldHaveNextPage}
-              isPending={songsQuery.isPlaceholderData}
+              isPending={songsQuery.isPlaceholderData || !songsQuery.isSuccess}
               onPageChange={setPageNumber}
               ariaLabel="Songs pagination"
             />
@@ -127,7 +131,16 @@ export const Home = () => {
               songs={savedQuery.data || []}
               action="remove"
               onAction={(song) => deleteSong(song.id)}
-              isLoading={isLoadingSavedSongs}
+              status={savedQuery.status}
+              isUpdating={savedQuery.isPlaceholderData}
+              loadingMessage="Loading your saved songs..."
+              emptyMessage={
+                debouncedSavedSearch
+                  ? `No saved songs found for “${debouncedSavedSearch}”.`
+                  : 'Your saved list is empty. Add songs to see them here.'
+              }
+              errorMessage="We couldn't load your saved songs."
+              onRetry={() => void savedQuery.refetch()}
             />
           </Surface>
         </div>
