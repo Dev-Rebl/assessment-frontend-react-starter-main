@@ -18,14 +18,14 @@ paths:
         - authTokenCookie: []
         - authTokenQuery: []
       responses:
-        "204":
+        '204':
           description: Authentication session is valid.
-        "401":
+        '401':
           description: Authentication session is missing or invalid.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnAuthorized"
+                $ref: '#/components/schemas/UnAuthorized'
   /login:
     post:
       tags:
@@ -37,10 +37,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Login"
+              $ref: '#/components/schemas/Login'
         required: true
       responses:
-        "200":
+        '200':
           description: Successfully authenticated.
             The auth token is returned in a cookie named `authToken`. You need to include this cookie in subsequent requests either via the `query parameters` or as a `cookie`.
           headers:
@@ -48,18 +48,18 @@ paths:
               schema:
                 type: string
                 example: authToken=abcde12345
-        "400":
+        '400':
           description: Credentials are missing.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MissingCredentials"
-        "401":
+                $ref: '#/components/schemas/MissingCredentials'
+        '401':
           description: Credentials are invalid.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/WrongCredentials"
+                $ref: '#/components/schemas/WrongCredentials'
 
   /songs:
     get:
@@ -114,18 +114,18 @@ paths:
             type: string
             example: 10
       responses:
-        "200":
+        '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Songs"
-        "401":
+                $ref: '#/components/schemas/Songs'
+        '401':
           description: Authorization information is missing or invalid.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnAuthorized"
+                $ref: '#/components/schemas/UnAuthorized'
 
   /saved:
     get:
@@ -180,18 +180,18 @@ paths:
             type: string
             example: 10
       responses:
-        "200":
+        '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Songs"
-        "401":
+                $ref: '#/components/schemas/Songs'
+        '401':
           description: Authorization information is missing or invalid.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnAuthorized"
+                $ref: '#/components/schemas/UnAuthorized'
 
     post:
       tags:
@@ -206,21 +206,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Song"
+              $ref: '#/components/schemas/Song'
         required: true
       responses:
-        "200":
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AddedSong"
-        "401":
+                $ref: '#/components/schemas/AddedSong'
+        '401':
           description: Authorization information is missing or invalid.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnAuthorized"
+                $ref: '#/components/schemas/UnAuthorized'
 
     delete:
       tags:
@@ -239,24 +239,24 @@ paths:
             type: integer
             example: 123
       responses:
-        "200":
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RemovedSong"
-        "400":
+                $ref: '#/components/schemas/RemovedSong'
+        '400':
           description: Bad request, no songId provided
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BadRequestSaved"
-        "401":
+                $ref: '#/components/schemas/BadRequestSaved'
+        '401':
           description: Authorization information is missing or invalid.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnAuthorized"
+                $ref: '#/components/schemas/UnAuthorized'
 
 components:
   securitySchemes:
@@ -370,4 +370,4 @@ components:
     Songs:
       type: array
       items:
-        $ref: "#/components/schemas/Song"
+        $ref: '#/components/schemas/Song'

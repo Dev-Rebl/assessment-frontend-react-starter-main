@@ -1,5 +1,6 @@
 ## Welcome!
-Please see the  **Frontend Assessment.pdf** for all the information about your assessment.\
+
+Please see the **Frontend Assessment.pdf** for all the information about your assessment.\
 Below is just a quick overview to get you up and running. Good luck!
 
 From the frontend directory, install both the FE and BE packages:
@@ -30,6 +31,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 The backend api runs at [http://localhost:4000](http://localhost:4000)
 
 ### Api documentation
+
 In the root of the project, you will find **API-docs.yaml**. This will specify how to use the api for this project.\
 For easy reading, you can import the file in the [swagger editor](https://editor.swagger.io/)
 

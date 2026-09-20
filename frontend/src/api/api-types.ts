@@ -4,381 +4,381 @@
  */
 
 export interface paths {
-    "/auth/session": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Check authentication session
-         * @description Check whether the current authentication session is valid.
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Authentication session is valid. */
-                204: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Authentication session is missing or invalid. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UnAuthorized"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/login": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Login
-         * @description Login to the application. See the request body for the actual credentials you can use to login.
-         */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            /** @description Login credentials */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["Login"];
-                };
-            };
-            responses: {
-                /** @description Successfully authenticated. The auth token is returned in a cookie named `authToken`. You need to include this cookie in subsequent requests either via the `query parameters` or as a `cookie`. */
-                200: {
-                    headers: {
-                        "Set-Cookie"?: string;
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Credentials are missing. */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MissingCredentials"];
-                    };
-                };
-                /** @description Credentials are invalid. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["WrongCredentials"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/songs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get songs
-         * @description Get songs based on the provided parameters. When no search parameters are provided, all songs will be returned. As this is a large list, this API is really slow.
-         */
-        get: {
-            parameters: {
-                query?: {
-                    /** @description Filter songs on based on name */
-                    name?: string;
-                    /** @description Filter songs on based on artist */
-                    artist?: string;
-                    /** @description Filter songs on based on genre */
-                    genre?: string;
-                    /** @description Filter songs on based on album */
-                    album?: string;
-                    /** @description Page number used for pagination. Starts at 1 */
-                    pageNumber?: string;
-                    /** @description Amount of songs per pagination */
-                    amountPerPage?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful operation */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Songs"];
-                    };
-                };
-                /** @description Authorization information is missing or invalid. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UnAuthorized"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/saved": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get saved songs
-         * @description Get saved songs based on the provided parameters. When no search parameters parameters are provided, all saved songs will be returned.
-         */
-        get: {
-            parameters: {
-                query?: {
-                    /** @description Filter songs on based on name */
-                    name?: string;
-                    /** @description Filter songs on based on artist */
-                    artist?: string;
-                    /** @description Filter songs on based on genre */
-                    genre?: string;
-                    /** @description Filter songs on based on album */
-                    album?: string;
-                    /** @description Page number used for pagination. Starts at 1 */
-                    pageNumber?: string;
-                    /** @description Amount of songs per pagination */
-                    amountPerPage?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful operation */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Songs"];
-                    };
-                };
-                /** @description Authorization information is missing or invalid. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UnAuthorized"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        /**
-         * Add song to saved
-         * @description Add songs to your saved playlist by providing the song object in the body.
-         */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            /** @description Add song to saved playlist */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["Song"];
-                };
-            };
-            responses: {
-                /** @description successful operation */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["AddedSong"];
-                    };
-                };
-                /** @description Authorization information is missing or invalid. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UnAuthorized"];
-                    };
-                };
-            };
-        };
-        /**
-         * Delete song from saved
-         * @description Delete a song from your saved playlist by providing the song's id in a parameter.
-         */
-        delete: {
-            parameters: {
-                query: {
-                    /** @description ID of the song that needs to be removed from the saved playlist */
-                    songId: number;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description successful operation */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["RemovedSong"];
-                    };
-                };
-                /** @description Bad request, no songId provided */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["BadRequestSaved"];
-                    };
-                };
-                /** @description Authorization information is missing or invalid. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UnAuthorized"];
-                    };
-                };
-            };
-        };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
+  '/auth/session': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Check authentication session
+     * @description Check whether the current authentication session is valid.
+     */
+    get: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description Authentication session is valid. */
+        204: {
+          headers: {
+            [name: string]: unknown
+          }
+          content?: never
+        }
+        /** @description Authentication session is missing or invalid. */
+        401: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UnAuthorized']
+          }
+        }
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/login': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /**
+     * Login
+     * @description Login to the application. See the request body for the actual credentials you can use to login.
+     */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      /** @description Login credentials */
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['Login']
+        }
+      }
+      responses: {
+        /** @description Successfully authenticated. The auth token is returned in a cookie named `authToken`. You need to include this cookie in subsequent requests either via the `query parameters` or as a `cookie`. */
+        200: {
+          headers: {
+            'Set-Cookie'?: string
+            [name: string]: unknown
+          }
+          content?: never
+        }
+        /** @description Credentials are missing. */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['MissingCredentials']
+          }
+        }
+        /** @description Credentials are invalid. */
+        401: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['WrongCredentials']
+          }
+        }
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/songs': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Get songs
+     * @description Get songs based on the provided parameters. When no search parameters are provided, all songs will be returned. As this is a large list, this API is really slow.
+     */
+    get: {
+      parameters: {
+        query?: {
+          /** @description Filter songs on based on name */
+          name?: string
+          /** @description Filter songs on based on artist */
+          artist?: string
+          /** @description Filter songs on based on genre */
+          genre?: string
+          /** @description Filter songs on based on album */
+          album?: string
+          /** @description Page number used for pagination. Starts at 1 */
+          pageNumber?: string
+          /** @description Amount of songs per pagination */
+          amountPerPage?: string
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description Successful operation */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['Songs']
+          }
+        }
+        /** @description Authorization information is missing or invalid. */
+        401: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UnAuthorized']
+          }
+        }
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/saved': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /**
+     * Get saved songs
+     * @description Get saved songs based on the provided parameters. When no search parameters parameters are provided, all saved songs will be returned.
+     */
+    get: {
+      parameters: {
+        query?: {
+          /** @description Filter songs on based on name */
+          name?: string
+          /** @description Filter songs on based on artist */
+          artist?: string
+          /** @description Filter songs on based on genre */
+          genre?: string
+          /** @description Filter songs on based on album */
+          album?: string
+          /** @description Page number used for pagination. Starts at 1 */
+          pageNumber?: string
+          /** @description Amount of songs per pagination */
+          amountPerPage?: string
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description Successful operation */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['Songs']
+          }
+        }
+        /** @description Authorization information is missing or invalid. */
+        401: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UnAuthorized']
+          }
+        }
+      }
+    }
+    put?: never
+    /**
+     * Add song to saved
+     * @description Add songs to your saved playlist by providing the song object in the body.
+     */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      /** @description Add song to saved playlist */
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['Song']
+        }
+      }
+      responses: {
+        /** @description successful operation */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['AddedSong']
+          }
+        }
+        /** @description Authorization information is missing or invalid. */
+        401: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UnAuthorized']
+          }
+        }
+      }
+    }
+    /**
+     * Delete song from saved
+     * @description Delete a song from your saved playlist by providing the song's id in a parameter.
+     */
+    delete: {
+      parameters: {
+        query: {
+          /** @description ID of the song that needs to be removed from the saved playlist */
+          songId: number
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description successful operation */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['RemovedSong']
+          }
+        }
+        /** @description Bad request, no songId provided */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['BadRequestSaved']
+          }
+        }
+        /** @description Authorization information is missing or invalid. */
+        401: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UnAuthorized']
+          }
+        }
+      }
+    }
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
 }
-export type webhooks = Record<string, never>;
+export type webhooks = Record<string, never>
 export interface components {
-    schemas: {
-        Login: {
-            /** @example test@axxes.com */
-            email?: string;
-            /** @example test */
-            password?: string;
-        };
-        WrongCredentials: {
-            /** @example Email or password incorrect */
-            error?: string;
-        };
-        MissingCredentials: {
-            /** @example Credentials are missing */
-            error?: string;
-        };
-        UnAuthorized: {
-            /** @example You are not authenticated */
-            error?: string;
-        };
-        AddedSong: {
-            /** @example ADD song */
-            message?: string;
-        };
-        RemovedSong: {
-            /** @example REMOVE song */
-            message?: string;
-        };
-        BadRequestSaved: {
-            /** @example no songId provided */
-            error?: string;
-        };
-        Song: {
-            /** @example 123 */
-            id: number;
-            /** @example 21st Century Breakdown */
-            name: string;
-            /** @example Green Day */
-            artist: string;
-            /** @example 1978 */
-            year?: number;
-            /** @example 21stcentdigiboy */
-            shortname: string;
-            /** @example 150 */
-            bpm?: number;
-            /** @example 372025 */
-            duration: number;
-            /** @example rock */
-            genre?: string;
-            /** @example 5H8xFHau0x3PI1CssO6EaX */
-            spotifyId?: string;
-            /** @example 21st Century Breakdown */
-            album?: string;
-            /** @example https://i.scdn.co/image/ab67616d0000b273c2ced39899b0d67cd5a724fa */
-            albumImage?: string;
-        };
-        Songs: components["schemas"]["Song"][];
-    };
-    responses: never;
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+  schemas: {
+    Login: {
+      /** @example test@axxes.com */
+      email?: string
+      /** @example test */
+      password?: string
+    }
+    WrongCredentials: {
+      /** @example Email or password incorrect */
+      error?: string
+    }
+    MissingCredentials: {
+      /** @example Credentials are missing */
+      error?: string
+    }
+    UnAuthorized: {
+      /** @example You are not authenticated */
+      error?: string
+    }
+    AddedSong: {
+      /** @example ADD song */
+      message?: string
+    }
+    RemovedSong: {
+      /** @example REMOVE song */
+      message?: string
+    }
+    BadRequestSaved: {
+      /** @example no songId provided */
+      error?: string
+    }
+    Song: {
+      /** @example 123 */
+      id: number
+      /** @example 21st Century Breakdown */
+      name: string
+      /** @example Green Day */
+      artist: string
+      /** @example 1978 */
+      year?: number
+      /** @example 21stcentdigiboy */
+      shortname: string
+      /** @example 150 */
+      bpm?: number
+      /** @example 372025 */
+      duration: number
+      /** @example rock */
+      genre?: string
+      /** @example 5H8xFHau0x3PI1CssO6EaX */
+      spotifyId?: string
+      /** @example 21st Century Breakdown */
+      album?: string
+      /** @example https://i.scdn.co/image/ab67616d0000b273c2ced39899b0d67cd5a724fa */
+      albumImage?: string
+    }
+    Songs: components['schemas']['Song'][]
+  }
+  responses: never
+  parameters: never
+  requestBodies: never
+  headers: never
+  pathItems: never
 }
-export type $defs = Record<string, never>;
-export type operations = Record<string, never>;
+export type $defs = Record<string, never>
+export type operations = Record<string, never>

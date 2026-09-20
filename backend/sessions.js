@@ -1,5 +1,5 @@
-const SESSIONS = new Map();
+const SESSIONS = new Map()
 
 module.exports = {
-  SESSIONS
+  SESSIONS,
 }
