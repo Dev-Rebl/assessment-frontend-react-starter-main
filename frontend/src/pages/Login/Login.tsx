@@ -1,26 +1,21 @@
-import { ThemeToggle } from '../../components/ThemeToggle'
-import { ContentWrapper } from '../../components/ContentWrapper'
-
 import loginImage from '../../assets/images/login-music-collage.png'
 import { Logo } from '../../components/Logo'
+import { PageLayout } from '../../components/PageLayout'
 import { Surface } from '../../components/Surface'
 import { LoginForm } from './components/LoginForm'
 
 export const Login = () => {
   return (
-    <>
-      <div className="sticky top-0 flex w-full justify-end items-center border-b px-4 h-16">
-        <ThemeToggle />
-      </div>
-      <ContentWrapper className="flex h-screen w-full items-center justify-center pt-16">
+    <PageLayout contentClassName="overflow-y-auto">
+      <div className="flex min-h-full items-center justify-center">
         <Surface className="w-full max-w-screen-md overflow-clip grid grid-cols-[2fr_3fr]">
-          <div className="p-6 isolate relative flex flex-col justify-end gap-4">
+          <div className="p-6 isolate relative flex flex-col justify-end gap-4 text-white">
             <img
               src={loginImage}
               alt="login music collage"
               className="absolute inset-0 h-full w-full border-r object-cover size-full object-center z-[-1]"
             />
-            <h2 className="">
+            <h2>
               Music
               <br /> fuels better
               <br /> work.
@@ -28,7 +23,7 @@ export const Login = () => {
 
             <hr className="w-10" />
 
-            <small className="leading-4 text-gray-500">
+            <small className="leading-4 text-white/70">
               A brighter day,
               <br /> a better you
             </small>
@@ -46,7 +41,7 @@ export const Login = () => {
             <LoginForm />
           </div>
         </Surface>
-      </ContentWrapper>
-    </>
+      </div>
+    </PageLayout>
   )
 }
