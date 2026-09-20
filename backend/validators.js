@@ -1,5 +1,5 @@
 const checkIfAuthenticated = (req, res, next, sessions) => {
-  if (req.path === '/login') return next();
+  if (req.path === "/login") return next();
 
   const authTokenQuery = req.query.authToken;
   const authTokenCookie = req.cookies.authToken;
@@ -7,9 +7,17 @@ const checkIfAuthenticated = (req, res, next, sessions) => {
   if (sessions.has(authTokenQuery) || sessions.has(authTokenCookie)) {
     return next();
   }
-  res.status(401).send({error: 'You are not authenticated'})
-}
+  
+  res
+    .clearCookie("authToken", {
+      secure: true,
+      sameSite: "none",
+      path: "/",
+    })
+    .status(401)
+    .send({ error: "You are not authenticated" });
+};
 
 module.exports = {
   checkIfAuthenticated,
-}
+};

@@ -17,6 +17,10 @@ app.use(cookieParser());
 
 app.all('*', (req, res, next) => checkIfAuthenticated(req, res, next, SESSIONS))
 
+app.get('/auth/session', (req, res) => {
+  res.sendStatus(204);
+});
+
 app.post('/login', (req, res) => {
   login(req, res)
 });
@@ -47,5 +51,3 @@ app.delete('/saved', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`)
 });
-
-

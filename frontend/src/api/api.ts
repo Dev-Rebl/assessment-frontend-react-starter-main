@@ -7,8 +7,8 @@ export const api = createClient<paths>({
 });
 
 api.use({
-  async onResponse({ response }) {
-    if (response.ok) {
+  async onResponse({ response, schemaPath }) {
+    if (response.ok || schemaPath === "/auth/session") {
       return;
     }
 
